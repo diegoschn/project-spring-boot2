@@ -41,7 +41,7 @@ public abstract class AbstractEntity<ID extends Serializable> implements Seriali
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		AbstractEntity other = (AbstractEntity) obj;
+		AbstractEntity<?> other = (AbstractEntity) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
