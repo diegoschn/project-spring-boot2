@@ -12,11 +12,12 @@ import javax.persistence.SequenceGenerator;
 @MappedSuperclass
 public abstract class AbstractEntity<ID extends Serializable> implements Serializable{
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "entity_seq")
-	@SequenceGenerator(name = "entity_seq", sequenceName = "entity_seq", initialValue = 1, allocationSize = 1)
+	
+	
 	private ID id;
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public ID getId() {
 		return id;
 	}
@@ -41,7 +42,7 @@ public abstract class AbstractEntity<ID extends Serializable> implements Seriali
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		AbstractEntity<?> other = (AbstractEntity) obj;
+		AbstractEntity<?> other = (AbstractEntity<?>) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;

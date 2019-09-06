@@ -32,7 +32,7 @@ public class Funcionario extends AbstractEntity<Integer> {
 		this.nome = nome;
 	}
 
-	@Column(nullable = false, columnDefinition = "DECIMAL(7,2 DEFAULT 0.00")
+	@Column(nullable = false, precision = 10, scale = 2)
 	public BigDecimal getSalario() {
 		return salario;
 	}
@@ -63,6 +63,10 @@ public class Funcionario extends AbstractEntity<Integer> {
 	@JoinColumn(name = "endereco_id_fk")
 	public Endereco getEndereco() {
 		return endereco;
+	}
+	
+	public void setEndereco(Endereco endereco) {
+		this.endereco = endereco;
 	}
 
 	@ManyToOne

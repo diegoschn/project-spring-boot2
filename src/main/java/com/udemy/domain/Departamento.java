@@ -4,8 +4,6 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -17,6 +15,8 @@ public class Departamento extends AbstractEntity<Integer>{
 	private String nome;
 	private List<Cargo> cargos;
 	
+	
+	
 	@Column(name = "nome", nullable = false, unique = true, length = 60)
 	public String getNome() {
 		return nome;
@@ -26,7 +26,8 @@ public class Departamento extends AbstractEntity<Integer>{
 		this.nome = nome;
 	}
 	
-	@OneToMany(mappedBy = "departamento",fetch = FetchType.LAZY)
+	@Column
+	@OneToMany(targetEntity = Cargo.class,mappedBy = "departamento")
 	public List<Cargo> getCargos() {
 		return cargos;
 	}
