@@ -11,4 +11,5 @@ public interface DepartamentoService {
 	void excluir(Integer id);
 	Departamento buscarPorId(Integer id);
 	List<Departamento> listarTodos();
+	boolean departamentoTemCargos(Integer id);
 }
