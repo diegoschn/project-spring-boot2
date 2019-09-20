@@ -62,4 +62,14 @@ public class CargoController {
 		redirect.addFlashAttribute("success","Cargo atualizado com sucesso!");
 		return "redirect:/cargos/listar";
 	}
+	
+	@GetMapping("/excluir/{id}")
+	public String excluir(@PathVariable("id") Integer id, RedirectAttributes redirect) {
+		if(cargoService.cargoTemFuncionarios(id)) {
+			redirect.addFlashAttribute("fail","Cargo não excluído por existir funcionários vinculados");
+		}
+		cargoService.excluir(id);
+		redirect.addFlashAttribute("success","Cargo excluído com sucesso!");
+		return "redirect:/cargos/listar";
+	}
 }

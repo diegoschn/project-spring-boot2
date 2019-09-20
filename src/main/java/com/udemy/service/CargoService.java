@@ -11,4 +11,5 @@ public interface CargoService {
 	void excluir(Integer id);
 	Cargo buscarPorId(Integer id);
 	List<Cargo> listarTodos();
+	boolean cargoTemFuncionarios(Integer id);
 }

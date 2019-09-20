@@ -11,6 +11,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
+import org.springframework.format.annotation.NumberFormat;
+import org.springframework.format.annotation.NumberFormat.Style;
+
 @SuppressWarnings("serial")
 @Entity
 @Table(name = "FUNCIONARIOS")
@@ -31,7 +36,8 @@ public class Funcionario extends AbstractEntity<Integer> {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-
+	
+	@NumberFormat(style = Style.CURRENCY, pattern = "#,##0.00")
 	@Column(nullable = false, precision = 10, scale = 2)
 	public BigDecimal getSalario() {
 		return salario;
@@ -40,7 +46,7 @@ public class Funcionario extends AbstractEntity<Integer> {
 	public void setSalario(BigDecimal salario) {
 		this.salario = salario;
 	}
-
+	@DateTimeFormat(iso = ISO.DATE)
 	@Column(name = "data_entrada", nullable = false, columnDefinition = "DATE")
 	public LocalDate getDataEntrada() {
 		return dataEntrada;
@@ -50,6 +56,7 @@ public class Funcionario extends AbstractEntity<Integer> {
 		this.dataEntrada = dataEntrada;
 	}
 
+	@DateTimeFormat(iso = ISO.DATE)
 	@Column(name = "data_saida", columnDefinition = "DATE")
 	public LocalDate getDataSaida() {
 		return dataSaida;
