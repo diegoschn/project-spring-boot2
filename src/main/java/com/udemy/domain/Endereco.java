@@ -5,6 +5,10 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Table;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @SuppressWarnings("serial")
 @Entity
@@ -19,6 +23,8 @@ public class Endereco extends AbstractEntity<Integer> {
 	private Integer numero;
 	private String complemento;
 
+	@NotBlank
+	@Size(min = 3, max = 255)
 	@Column(nullable = false)
 	public String getLogradouro() {
 		return logradouro;
@@ -28,6 +34,8 @@ public class Endereco extends AbstractEntity<Integer> {
 		this.logradouro = logradouro;
 	}
 
+	@NotBlank
+	@Size(min = 3, max = 255)
 	@Column(nullable = false)
 	public String getBairro() {
 		return bairro;
@@ -36,7 +44,9 @@ public class Endereco extends AbstractEntity<Integer> {
 	public void setBairro(String bairro) {
 		this.bairro = bairro;
 	}
-
+	
+	@NotBlank
+	@Size(min = 3, max = 255)
 	@Column(nullable = false)
 	public String getCidade() {
 		return cidade;
@@ -46,6 +56,7 @@ public class Endereco extends AbstractEntity<Integer> {
 		this.cidade = cidade;
 	}
 
+	@NotNull(message = "{NotNull.endereco.uf}")
 	@Column(nullable = false, length = 2)
 	@Enumerated(EnumType.STRING)
 	public UF getUf() {
@@ -56,6 +67,8 @@ public class Endereco extends AbstractEntity<Integer> {
 		this.uf = uf;
 	}
 
+	@NotBlank
+	@Size(min = 3, max = 9, message = "{Size.endereco.cep}")
 	@Column(nullable = false, length = 9)
 	public String getCep() {
 		return cep;
@@ -65,6 +78,8 @@ public class Endereco extends AbstractEntity<Integer> {
 		this.cep = cep;
 	}
 
+	@NotNull(message = "{NotNull.endereco.numero}")
+	@Digits(integer = 5, fraction = 0)
 	@Column(nullable = false, length = 5)
 	public Integer getNumero() {
 		return numero;
@@ -74,6 +89,7 @@ public class Endereco extends AbstractEntity<Integer> {
 		this.numero = numero;
 	}
 	
+	@Size(max = 255)
 	public String getComplemento() {
 		return complemento;
 	}

@@ -12,4 +12,5 @@ public interface CargoService {
 	Cargo buscarPorId(Integer id);
 	List<Cargo> listarTodos();
 	boolean cargoTemFuncionarios(Integer id);
+	
 }

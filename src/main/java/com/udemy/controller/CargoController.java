@@ -2,9 +2,12 @@ package com.udemy.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -39,7 +42,10 @@ public class CargoController {
 	}
 	
 	@PostMapping("/salvar")
-	public String salvar(Cargo cargo, RedirectAttributes redirect) {
+	public String salvar(@Valid Cargo cargo,BindingResult result, RedirectAttributes redirect) {
+		if(result.hasErrors()) {
+			return "/cargo/cadastro";
+		}
 		this.cargoService.salvar(cargo);
 		redirect.addFlashAttribute("success", "Cargo cadastro com sucesso.");
 		return "redirect:/cargos/listar";
@@ -57,7 +63,10 @@ public class CargoController {
 	}
 	
 	@PostMapping("/editar")
-	public String editar(Cargo cargo, RedirectAttributes redirect) {
+	public String editar(@Valid Cargo cargo, BindingResult result, RedirectAttributes redirect) {
+		if(result.hasErrors()) {
+			return "/cargo/lista";
+		}
 		this.cargoService.editar(cargo);
 		redirect.addFlashAttribute("success","Cargo atualizado com sucesso!");
 		return "redirect:/cargos/listar";

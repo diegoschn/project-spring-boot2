@@ -1,3 +1,4 @@
+
 package com.udemy.domain;
 
 import java.math.BigDecimal;
@@ -10,6 +11,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PastOrPresent;
+import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
@@ -27,7 +33,9 @@ public class Funcionario extends AbstractEntity<Integer> {
 	private LocalDate dataSaida;
 	private Endereco endereco;
 	private Cargo cargo;
-
+	
+	@NotBlank
+	@Size(max = 255, min = 3)
 	@Column(nullable = false, unique = true)
 	public String getNome() {
 		return nome;
@@ -37,6 +45,7 @@ public class Funcionario extends AbstractEntity<Integer> {
 		this.nome = nome;
 	}
 	
+	@NotNull
 	@NumberFormat(style = Style.CURRENCY, pattern = "#,##0.00")
 	@Column(nullable = false, precision = 10, scale = 2)
 	public BigDecimal getSalario() {
@@ -46,6 +55,8 @@ public class Funcionario extends AbstractEntity<Integer> {
 	public void setSalario(BigDecimal salario) {
 		this.salario = salario;
 	}
+	@NotNull
+	@PastOrPresent(message = "{PastOrPresent.funcionario.dataEntrada}")
 	@DateTimeFormat(iso = ISO.DATE)
 	@Column(name = "data_entrada", nullable = false, columnDefinition = "DATE")
 	public LocalDate getDataEntrada() {
@@ -56,6 +67,7 @@ public class Funcionario extends AbstractEntity<Integer> {
 		this.dataEntrada = dataEntrada;
 	}
 
+	
 	@DateTimeFormat(iso = ISO.DATE)
 	@Column(name = "data_saida", columnDefinition = "DATE")
 	public LocalDate getDataSaida() {
@@ -66,6 +78,7 @@ public class Funcionario extends AbstractEntity<Integer> {
 		this.dataSaida = dataSaida;
 	}
 
+	@Valid
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "endereco_id_fk")
 	public Endereco getEndereco() {
@@ -76,6 +89,7 @@ public class Funcionario extends AbstractEntity<Integer> {
 		this.endereco = endereco;
 	}
 
+	@NotNull(message = "{NotNull.funcionario.cargo}")
 	@ManyToOne
 	@JoinColumn(name = "cargo_id_fk")
 	public Cargo getCargo() {

@@ -1,5 +1,7 @@
 package com.udemy.service.impl;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +44,29 @@ public class FuncionarioServiceImpl implements FuncionarioService{
 	@Transactional(readOnly = true)
 	public List<Funcionario> listarTodos() {
 		return this.funcionarioDAO.findAll();
+	}
+
+	@Override
+	public List<Funcionario> buscarPorNome(String nome) {
+		return funcionarioDAO.findByNome(nome);
+	}
+	
+	@Transactional(readOnly = true)
+	public List<Funcionario> buscarPorCargo(Integer id){
+		return funcionarioDAO.findByCargo(id);
+	}
+
+	@Override
+	public List<Funcionario> buscarPorDatas(LocalDate entrada, LocalDate saida) {
+		if(entrada!=null && saida!=null) {
+			return funcionarioDAO.findByEntradaDataSaida(entrada, saida);
+		}else if(entrada!=null) {
+			return funcionarioDAO.findByDataEntrada(entrada);
+		}else if(saida!=null) {
+			return funcionarioDAO.findByDataSaida(saida);
+		}else {
+			return new ArrayList<>();
+		}
 	}
 
 	

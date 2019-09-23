@@ -1,8 +1,11 @@
 package com.udemy.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,7 +34,10 @@ public class DepartamentoController {
 	}
 	
 	@PostMapping("/salvar")
-	public String salvar(Departamento departamento, RedirectAttributes redirect) {
+	public String salvar(@Valid Departamento departamento, BindingResult result, RedirectAttributes redirect) {
+		if(result.hasErrors()) {
+			return "/departamento/cadastro";
+		}
 		this.departamentoService.salvar(departamento);
 		redirect.addFlashAttribute("success", "Departamento cadastrado com sucesso.");
 		return "redirect:/departamentos/cadastrar";
@@ -44,7 +50,10 @@ public class DepartamentoController {
 	}
 	
 	@PostMapping("/editar")
-	public String editar(Departamento departamento, RedirectAttributes redirect) {
+	public String editar(@Valid Departamento departamento, BindingResult result, RedirectAttributes redirect) {
+		if(result.hasErrors()) {
+			return "/departamento/lista";
+		}
 		this.departamentoService.editar(departamento);
 		redirect.addFlashAttribute("success","Departamento atualizado com sucesso!");
 		return "redirect:/departamentos/cadastrar";
